@@ -280,4 +280,69 @@ public class Filtros {
 
         return copia;
     }
+
+    // public BufferedImage blur2(BufferedImage imagen) throws IOException {
+    //     BufferedImage copia = copia(imagen, BufferedImage.TYPE_INT_RGB);
+
+    //     int alto = copia.getHeight();
+    //     int ancho = copia.getWidth();
+
+    //     double blur[][] = {
+    //         {0, 0, 1, 0, 0},
+    //     };
+
+    //     for(int i = 0; i < alto; ++i) {
+    //         for(int j = 0; j < ancho; ++j) {
+    //             double rojo = 0;
+    //             double verde = 0;
+    //             double azul = 0;
+    //             int pixel = imagen.getRGB(j, i);
+    //             Color c = new Color(pixel);
+
+    //             rojo += c.getRed() + 50;
+    //             verde += c.getGreen();
+    //             azul += c.getBlue() + 25;
+
+    //             rojo = (rojo>255)?255:(rojo<0)?0:rojo;
+    //             verde = (verde>255)?255:(verde<0)?0:verde;
+    //             azul = (azul>255)?255:(azul<0)?0:azul;
+
+    //             copia.setRGB(j, i, new Color((int)rojo,(int)verde,(int)azul).getRGB());
+    //         }
+    //     }
+
+    //     return copia;
+    // }
+
+    public BufferedImage grises(BufferedImage imagen) throws IOException{
+        BufferedImage copia = copia(imagen,BufferedImage.TYPE_INT_RGB);
+        
+        int alto = copia.getHeight();
+        int ancho = copia.getWidth();
+
+
+        for(int y = 0; y< alto; ++y){
+            double rojo = 0;
+            double verde = 0;
+            double azul = 0;
+            double gray=0;
+            
+            for(int x = 0; x<ancho; ++x){
+                int pixel=imagen.getRGB(x, y);
+                Color c= new Color(pixel);
+
+                gray= ((c.getRed() + c.getGreen() + c.getBlue()) / 3);
+
+                rojo = (rojo>255)?255:(rojo<0)?0:rojo;
+                verde = (verde>255)?255:(verde<0)?0:verde;
+                azul = (azul>255)?255:(azul<0)?0:azul;
+
+                copia.setRGB(x, y, new Color((int)gray,(int)gray,(int)gray).getRGB());
+
+
+      
+            }
+        }
+        return copia;
+    }
 }
