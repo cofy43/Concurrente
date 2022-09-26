@@ -217,7 +217,6 @@ public class FiltrosConcurrente extends Filtros {
     }
 
     public void grisesConcurrente(BufferedImage imagen, BufferedImage copia, int y) throws IOException {
-        int alto = copia.getHeight();
         int ancho = copia.getWidth();
 
         for(int x = 0; x<ancho; ++x){
@@ -239,6 +238,28 @@ public class FiltrosConcurrente extends Filtros {
         }
     }
 
+    public void correctudConcurrente(BufferedImage imagen, BufferedImage copia, int y) throws IOException {
+        int ancho = copia.getWidth();
+
+        for(int x = 0; x<ancho; ++x){
+            double rojo = 0;
+            double verde = 0;
+            double azul = 0;
+            double gray=0;
+
+            int pixel=imagen.getRGB(x, y);
+            Color c= new Color(pixel);
+
+            gray= (c.getRed()*.03 + c.getGreen()*.059 + c.getBlue()*.11);
+
+            rojo = (rojo>255)?255:(rojo<0)?0:rojo;
+            verde = (verde>255)?255:(verde<0)?0:verde;
+            azul = (azul>255)?255:(azul<0)?0:azul;
+
+            copia.setRGB(x, y, new Color((int)gray,(int)gray,(int)gray).getRGB());
+        }
+    }
+
     public static void main(String[] args) throws IOException, InterruptedException{
         FiltrosConcurrente fc = new FiltrosConcurrente();
 
@@ -247,7 +268,8 @@ public class FiltrosConcurrente extends Filtros {
         //BufferedImage res = fc.motionBlur(imagen);//Secuencial
         //BufferedImage res = fc.sharpen(imagen);//Secuencial
         //BufferedImage res = fc.componentesRGB(imagen);//Secuencial
-        BufferedImage res = fc.grises(imagen);//Secuencial
+        //BufferedImage res = fc.grises(imagen);//Secuencial
+        BufferedImage res = fc.correctud(imagen);//Secuencial
         fc.guardaImagen(res,"assets/img/Prueba_sharpen_secuencial.png");
 
         List<Thread> hilosL = new ArrayList<>();
@@ -261,7 +283,8 @@ public class FiltrosConcurrente extends Filtros {
                         //fc.motionBlurConcurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
                         //fc.sharpenConcurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
                         //fc.componentesRGBConcurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
-                        fc.grisesConcurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
+                        //fc.grisesConcurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
+                        fc.correctudConcurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
                     }catch(IOException e){
                         e.printStackTrace();
                     } 
