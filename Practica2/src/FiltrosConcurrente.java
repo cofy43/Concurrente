@@ -216,6 +216,127 @@ public class FiltrosConcurrente extends Filtros {
         }
     }
 
+    public void blur2Concurrente(BufferedImage imagen, BufferedImage copia, int i) throws IOException {
+        int ancho = copia.getWidth();
+        int alto = copia.getHeight();
+
+        double blur[][] = {
+            {0, 0, 1, 0, 0},
+            {0, 1, 1, 1, 0},
+            {1, 1, 1, 1, 1},
+            {0, 1, 1, 1, 0},
+            {0, 0, 1, 0, 0},
+        };
+
+        for(int j = 0; j < ancho; ++j) {
+            double rojo = 0;
+            double verde = 0;
+            double azul = 0;
+
+            // Pixel 1 (0, 2)
+            int pixel = imagen.getRGB((j) % ancho, (i + 2) % alto);
+            Color c = new Color(pixel);
+            rojo += c.getRed()* blur[0][2];
+            verde += c.getGreen()* blur[0][2];
+            azul += c.getBlue()* blur[0][2];
+
+            // Pixel 2 (-1, 1)
+            pixel = imagen.getRGB(((j - 1) % ancho < 0) ? ancho - 1 : j - 1, (i + 1) % alto);
+            c = new Color(pixel);
+            rojo += c.getRed()* blur[1][1];
+            verde += c.getGreen()* blur[1][1];
+            azul += c.getBlue()* blur[1][1];
+
+            // Pixel 3 (0, 1)
+            pixel = imagen.getRGB(j % ancho, (i + 1) % alto);
+            c = new Color(pixel);
+            rojo += c.getRed()* blur[1][2];
+            verde += c.getGreen()* blur[1][2];
+            azul += c.getBlue()* blur[1][2];
+
+            // Pixel 4 (1, 1)
+            pixel = imagen.getRGB((j + 1) % ancho, (i + 1) % alto);
+            c = new Color(pixel);
+            rojo += c.getRed()* blur[1][2];
+            verde += c.getGreen()* blur[1][2];
+            azul += c.getBlue()* blur[1][2];
+
+            // Pixel 5 (-2, 0)
+            pixel = imagen.getRGB(((j - 2) % ancho < 0) ? ancho - 2 : j - 2, i % alto);
+            c = new Color(pixel);
+            rojo += c.getRed()* blur[2][0];
+            verde += c.getGreen()* blur[2][0];
+            azul += c.getBlue()* blur[2][0];
+
+            // Pixel 6 (-1, 0)
+            pixel = imagen.getRGB(((j - 1) % ancho < 0) ? ancho - 1 : j - 1, i % alto);
+            c = new Color(pixel);
+            rojo += c.getRed()* blur[2][1];
+            verde += c.getGreen()* blur[2][1];
+            azul += c.getBlue()* blur[2][1];
+
+            // Pixel 7 (0, 0)
+            pixel = imagen.getRGB((j + 1) % ancho, i % alto);
+            c = new Color(pixel);
+            rojo += c.getRed()* blur[2][2];
+            verde += c.getGreen()* blur[2][2];
+            azul += c.getBlue()* blur[2][2];
+
+            // Pixel 8 (1, 0)
+            pixel = imagen.getRGB((j + 1) % ancho, i % alto);
+            c = new Color(pixel);
+            rojo += c.getRed()* blur[2][3];
+            verde += c.getGreen()* blur[2][3];
+            azul += c.getBlue()* blur[2][3];
+
+            // Pixel 9 (2, 0)
+            pixel = imagen.getRGB((j + 2) % ancho, i % alto);
+            c = new Color(pixel);
+            rojo += c.getRed()* blur[2][4];
+            verde += c.getGreen()* blur[2][4];
+            azul += c.getBlue()* blur[2][4];
+
+            // Pixel 10 (-1, -1)
+            pixel = imagen.getRGB(((j - 1) % ancho < 0) ? ancho - 1 : j - 1,
+                    ((i - 1) % alto < 0) ? alto - 1 : i - 1);
+            c = new Color(pixel);
+            rojo += c.getRed()* blur[3][1];
+            verde += c.getGreen()* blur[3][1];
+            azul += c.getBlue()* blur[3][1];
+
+            // Pixel 11 (0, -1)
+            pixel = imagen.getRGB(j % ancho, ((i - 1) % alto < 0) ? alto - 1 : i - 1);
+            c = new Color(pixel);
+            rojo += c.getRed()* blur[3][2];
+            verde += c.getGreen()* blur[3][2];
+            azul += c.getBlue()* blur[3][2];
+
+            // Pixel 12 (1, -1)
+            pixel = imagen.getRGB((j + 1) % ancho, ((i - 1) % alto < 0) ? alto - 1 : i - 1);
+            c = new Color(pixel);
+            rojo += c.getRed()* blur[3][3];
+            verde += c.getGreen()* blur[3][3];
+            azul += c.getBlue()* blur[3][3];
+
+            // Pixel 13 (0, -2)
+            pixel = imagen.getRGB(j % ancho, ((i - 2) % alto < 0) ? alto - 2 : i - 2);
+            c = new Color(pixel);
+            rojo += c.getRed()* blur[4][2];
+            verde += c.getGreen()* blur[4][2];
+            azul += c.getBlue()* blur[4][2];
+
+            rojo /= 13;
+            verde /= 13;
+            azul /= 13;
+
+            rojo = (rojo>255)?255:(rojo<0)?0:rojo;
+            verde = (verde>255)?255:(verde<0)?0:verde;
+            azul = (azul>255)?255:(azul<0)?0:azul;
+
+            copia.setRGB(j, i, new Color((int)rojo,(int)verde,(int)azul).getRGB());
+        }
+    }
+
     public void grisesConcurrente(BufferedImage imagen, BufferedImage copia, int y) throws IOException {
         int ancho = copia.getWidth();
 
@@ -292,7 +413,8 @@ public class FiltrosConcurrente extends Filtros {
         //BufferedImage res = fc.componentesRGB(imagen);//Secuencial
         //BufferedImage res = fc.grises(imagen);//Secuencial
         //BufferedImage res = fc.correctud(imagen);//Secuencial
-        BufferedImage res = fc.correctud2(imagen);//Secuencial
+        //BufferedImage res = fc.correctud2(imagen);//Secuencial
+        BufferedImage res = fc.blur2(imagen);//Secuencial
         fc.guardaImagen(res,"assets/img/Prueba_sharpen_secuencial.png");
 
         List<Thread> hilosL = new ArrayList<>();
@@ -308,7 +430,8 @@ public class FiltrosConcurrente extends Filtros {
                         //fc.componentesRGBConcurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
                         //fc.grisesConcurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
                         //fc.correctudConcurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
-                        fc.correctud2Concurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
+                        //fc.correctud2Concurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
+                        fc.blur2Concurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
                     }catch(IOException e){
                         e.printStackTrace();
                     } 
