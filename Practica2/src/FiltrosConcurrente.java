@@ -146,6 +146,6 @@ public class FiltrosConcurrente extends Filtros {
             threads.join();
         }
 
-        fc.guardaImagen(copia,"Prueba.png");
+        fc.guardaImagen(copia,"src/assets/img/Prueba.png");
     }
 }
