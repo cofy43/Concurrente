@@ -132,7 +132,7 @@ public class Sopa {
     }
 
     public static void main(String[] args) {
-        char [][] sopa = readMatriz("src/sopa.txt");
+        char [][] sopa = readMatriz("sopa.txt");
         for (int i = 0; i < sopa.length; i++){
             String s = "";
             for (int j = 0; j < sopa[i].length; j++){
