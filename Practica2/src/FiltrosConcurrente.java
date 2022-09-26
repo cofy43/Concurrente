@@ -195,13 +195,35 @@ public class FiltrosConcurrente extends Filtros {
         }
     }
     
+    public void componentesRGBConcurrente(BufferedImage imagen, BufferedImage copia, int i) throws IOException {
+        int ancho = copia.getWidth();
+
+        for(int j = 0; j < ancho; j++) {
+            double rojo = 0;
+            double verde = 0;
+            double azul = 0;
+            int pixel = imagen.getRGB(j, i);
+            Color c = new Color(pixel);
+            rojo += c.getRed() + 50;
+            verde += c.getGreen();
+            azul += c.getBlue() + 25;
+
+            rojo = (rojo>255)?255:(rojo<0)?0:rojo;
+            verde = (verde>255)?255:(verde<0)?0:verde;
+            azul = (azul>255)?255:(azul<0)?0:azul;
+
+            copia.setRGB(j, i, new Color((int)rojo,(int)verde,(int)azul).getRGB());
+        }
+    }
+
     public static void main(String[] args) throws IOException, InterruptedException{
         FiltrosConcurrente fc = new FiltrosConcurrente();
 
         BufferedImage imagen = fc.leeImagen("src/assets/img/test1.jpeg");
         BufferedImage copia = copia(imagen, BufferedImage.TYPE_INT_RGB);
         //BufferedImage res = fc.motionBlur(imagen);//Secuencial
-        BufferedImage res = fc.sharpen(imagen);//Secuencial
+        //BufferedImage res = fc.sharpen(imagen);//Secuencial
+        BufferedImage res = fc.componentesRGB(imagen);//Secuencial
         fc.guardaImagen(res,"src/assets/img/Prueba_sharpen_secuencial.png");
 
         List<Thread> hilosL = new ArrayList<>();
@@ -213,7 +235,8 @@ public class FiltrosConcurrente extends Filtros {
                 public void run() {
                     try{
                         //fc.motionBlurConcurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
-                        fc.sharpenConcurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
+                        //fc.sharpenConcurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
+                        fc.componentesRGBConcurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
                     }catch(IOException e){
                         e.printStackTrace();
                     } 

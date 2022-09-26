@@ -171,12 +171,12 @@ public class Filtros {
                 { -1, -1, -1 },
         };
 
-        for (int i = 0; i < alto; i++) {
-            double rojo = 0;
-            double verde = 0;
-            double azul = 0;
+        for (int i = 0; i < alto; ++i) {
+            for (int j = 0; j < ancho; ++j) {
+                double rojo = 0;
+                double verde = 0;
+                double azul = 0;
 
-            for (int j = 0; j < ancho; j++) {
                 // Pixel 1 (-1, 1) = -1
                 int pixel = imagen.getRGB(((j - 1) % ancho < 0) ? ancho - 1 : j - 1, (i + 1) % alto);
                 Color c = new Color(pixel);
@@ -240,6 +240,35 @@ public class Filtros {
                 rojo += c.getRed() * sharpenMatriz[2][1];
                 verde += c.getGreen() * sharpenMatriz[2][1];
                 azul += c.getBlue() * sharpenMatriz[2][1];
+
+                rojo = (rojo>255)?255:(rojo<0)?0:rojo;
+                verde = (verde>255)?255:(verde<0)?0:verde;
+                azul = (azul>255)?255:(azul<0)?0:azul;
+
+                copia.setRGB(j, i, new Color((int)rojo,(int)verde,(int)azul).getRGB());
+            }
+        }
+
+        return copia;
+    }
+
+    public BufferedImage componentesRGB(BufferedImage imagen) throws IOException {
+        BufferedImage copia = copia(imagen, BufferedImage.TYPE_INT_RGB);
+
+        int alto = copia.getHeight();
+        int ancho = copia.getWidth();
+
+        for(int i = 0; i < alto; ++i) {
+            for(int j = 0; j < ancho; ++j) {
+                double rojo = 0;
+                double verde = 0;
+                double azul = 0;
+                int pixel = imagen.getRGB(j, i);
+                Color c = new Color(pixel);
+
+                rojo += c.getRed() + 50;
+                verde += c.getGreen();
+                azul += c.getBlue() + 25;
 
                 rojo = (rojo>255)?255:(rojo<0)?0:rojo;
                 verde = (verde>255)?255:(verde<0)?0:verde;
