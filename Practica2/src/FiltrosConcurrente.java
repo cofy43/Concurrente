@@ -219,12 +219,12 @@ public class FiltrosConcurrente extends Filtros {
     public static void main(String[] args) throws IOException, InterruptedException{
         FiltrosConcurrente fc = new FiltrosConcurrente();
 
-        BufferedImage imagen = fc.leeImagen("src/assets/img/test1.jpeg");
+        BufferedImage imagen = fc.leeImagen("assets/img/test1.jpeg");
         BufferedImage copia = copia(imagen, BufferedImage.TYPE_INT_RGB);
         //BufferedImage res = fc.motionBlur(imagen);//Secuencial
         //BufferedImage res = fc.sharpen(imagen);//Secuencial
         BufferedImage res = fc.componentesRGB(imagen);//Secuencial
-        fc.guardaImagen(res,"src/assets/img/Prueba_sharpen_secuencial.png");
+        fc.guardaImagen(res,"assets/img/Prueba_sharpen_secuencial.png");
 
         List<Thread> hilosL = new ArrayList<>();
         int hilos = 15;
@@ -257,6 +257,6 @@ public class FiltrosConcurrente extends Filtros {
             threads.join();
         }
 
-        fc.guardaImagen(copia,"src/assets/img/Prueba_sharpen_concurrente.png");
+        fc.guardaImagen(copia,"assets/img/Prueba_sharpen_concurrente.png");
     }
 }
