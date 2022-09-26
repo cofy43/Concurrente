@@ -1,3 +1,5 @@
+package Suma_Matrices;
+
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
@@ -66,8 +68,8 @@ public class SumaMatricesConcurrente implements Runnable{
     public static void main(String[] args) throws InterruptedException{
         long tInicio, tFin;
         tInicio = System.nanoTime();
-        double[][] A = readMatrix("Matriz.txt");
-        double[][] B = readMatrix("Matriz1.txt");
+        double[][] A = readMatrix("src/Suma_Matrices/Matriz.txt");
+        double[][] B = readMatrix("src/Suma_Matrices/Matriz1.txt");
         SumaMatricesConcurrente m = new SumaMatricesConcurrente(A,B);
         int hilos = 5;
         List<Thread> hilosh = new ArrayList<Thread>();

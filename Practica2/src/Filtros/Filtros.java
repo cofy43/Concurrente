@@ -1,3 +1,5 @@
+package Filtros;
+
 import java.io.InputStream;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;

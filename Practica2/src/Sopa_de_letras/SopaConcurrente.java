@@ -1,3 +1,5 @@
+package Sopa_de_letras;
+
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
@@ -149,7 +151,7 @@ public class SopaConcurrente {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        char [][] sopa = readMatriz("sopa.txt");
+        char [][] sopa = readMatriz("src/Sopa_de_letras/sopa.txt");
         for (int i = 0; i < sopa.length; i++){
             String s = "";
             for (int j = 0; j < sopa[i].length; j++){
