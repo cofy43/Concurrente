@@ -3,7 +3,6 @@ import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
 import java.util.List;
 import java.util.ArrayList;
-import java.io.IOException;
 
 public class SopaConcurrente {
 
