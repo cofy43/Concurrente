@@ -374,4 +374,33 @@ public class Filtros {
         }
         return copia;
     }
+
+    public BufferedImage correctud2(BufferedImage imagen) throws IOException{
+        BufferedImage copia = copia(imagen,BufferedImage.TYPE_INT_RGB);
+        
+        int alto = copia.getHeight();
+        int ancho = copia.getWidth();
+
+
+        for(int y = 0; y< alto; ++y){
+            double rojo = 0;
+            double verde = 0;
+            double azul = 0;
+            double gray=0;
+            
+            for(int x = 0; x<ancho; ++x){
+                int pixel=imagen.getRGB(x, y);
+                Color c= new Color(pixel);
+
+                gray= (c.getRed()*.216 + c.getGreen()*.7152 + c.getBlue()*.0722);
+
+                rojo = (rojo>255)?255:(rojo<0)?0:rojo;
+                verde = (verde>255)?255:(verde<0)?0:verde;
+                azul = (azul>255)?255:(azul<0)?0:azul;
+
+                copia.setRGB(x, y, new Color((int)gray,(int)gray,(int)gray).getRGB());
+            }
+        }
+        return copia;
+    }
 }
