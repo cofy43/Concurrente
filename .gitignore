@@ -2,3 +2,5 @@
 .DS_Store
 # Bibliography
 The art of multiprocessor programming.pdf
+# Binary files:
+Practica2/src/*.class
