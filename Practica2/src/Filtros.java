@@ -158,4 +158,97 @@ public class Filtros {
         }
         return copia;
     }
+
+    public BufferedImage sharpen(BufferedImage imagen) throws IOException {
+        BufferedImage copia = copia(imagen, BufferedImage.TYPE_INT_RGB);
+
+        int alto = copia.getHeight();
+        int ancho = copia.getWidth();
+
+        int sharpenMatriz[][] = {
+                { -1, -1, -1 },
+                { -1, 9, -1 },
+                { -1, -1, -1 },
+        };
+
+        for (int i = 0; i < alto; i++) {
+            double rojo = 0;
+            double verde = 0;
+            double azul = 0;
+
+            for (int j = 0; j < ancho; j++) {
+                // Pixel 1 (-1, 1) = -1
+                int pixel = imagen.getRGB(((j - 1) % ancho < 0) ? ancho - 1 : j - 1, (i + 1) % alto);
+                Color c = new Color(pixel);
+                rojo += c.getRed() * sharpenMatriz[0][0];
+                verde += c.getGreen() * sharpenMatriz[0][0];
+                azul += c.getBlue() * sharpenMatriz[0][0];
+
+                // Pixel 2 (0, 1) = -1
+                pixel = imagen.getRGB((j % ancho), (i + 1) % alto);
+                c = new Color(pixel);
+                rojo += c.getRed() * sharpenMatriz[0][1];
+                verde += c.getGreen() * sharpenMatriz[0][1];
+                azul += c.getBlue() * sharpenMatriz[0][1];
+
+                // Pixel 3 (1, 1) = -1
+                pixel = imagen.getRGB((j + 1) % ancho, (i + 1) % alto);
+                c = new Color(pixel);
+                rojo += c.getRed() * sharpenMatriz[0][2];
+                verde += c.getGreen() * sharpenMatriz[0][2];
+                azul += c.getBlue() * sharpenMatriz[0][2];
+
+                // Pixel 4 (-1, 0) = -1
+                pixel = imagen.getRGB(((j - 1) % ancho < 0) ? ancho - 1 : j - 1, (i) % alto);
+                c = new Color(pixel);
+                rojo += c.getRed() * sharpenMatriz[1][0];
+                verde += c.getGreen() * sharpenMatriz[1][0];
+                azul += c.getBlue() * sharpenMatriz[1][0];
+
+                // Pixel 5 (0, 0) = 9
+                pixel = imagen.getRGB((j) % ancho, (i) % alto);
+                c = new Color(pixel);
+                rojo += c.getRed() * sharpenMatriz[1][1];
+                verde += c.getGreen() * sharpenMatriz[1][1];
+                azul += c.getBlue() * sharpenMatriz[1][1];
+
+                // Pixel 6 (1, 0) = -1
+                pixel = imagen.getRGB((j + 1) % ancho, (i) % alto);
+                c = new Color(pixel);
+                rojo += c.getRed() * sharpenMatriz[1][2];
+                verde += c.getGreen() * sharpenMatriz[1][2];
+                azul += c.getBlue() * sharpenMatriz[1][2];
+
+                // Pixel 7 (-1, -1) = -1
+                pixel = imagen.getRGB(((j - 1) % ancho < 0) ? ancho - 1 : j - 1,
+                        ((i - 1) % alto < 0) ? alto - 1 : i - 1);
+                c = new Color(pixel);
+                rojo += c.getRed() * sharpenMatriz[2][0];
+                verde += c.getGreen() * sharpenMatriz[2][0];
+                azul += c.getBlue() * sharpenMatriz[2][0];
+
+                // Pixel 8 (0, -1) = -1
+                pixel = imagen.getRGB((j) % ancho, ((i - 1) % alto < 0) ? alto - 1 : i - 1);
+                c = new Color(pixel);
+                rojo += c.getRed() * sharpenMatriz[2][1];
+                verde += c.getGreen() * sharpenMatriz[2][1];
+                azul += c.getBlue() * sharpenMatriz[2][1];
+
+                // Pixel 9 (1, -1) = -1
+                pixel = imagen.getRGB((j + 1) % ancho, ((i - 1) % alto < 0) ? alto - 1 : i - 1);
+                c = new Color(pixel);
+                rojo += c.getRed() * sharpenMatriz[2][1];
+                verde += c.getGreen() * sharpenMatriz[2][1];
+                azul += c.getBlue() * sharpenMatriz[2][1];
+
+                rojo = (rojo>255)?255:(rojo<0)?0:rojo;
+                verde = (verde>255)?255:(verde<0)?0:verde;
+                azul = (azul>255)?255:(azul<0)?0:azul;
+
+                copia.setRGB(j, i, new Color((int)rojo,(int)verde,(int)azul).getRGB());
+            }
+        }
+
+        return copia;
+    }
 }

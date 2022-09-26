@@ -110,12 +110,99 @@ public class FiltrosConcurrente extends Filtros {
         }
     }
 
+    public void sharpenConcurrente(BufferedImage imagen, BufferedImage copia, int i) throws IOException {
+        int alto = copia.getHeight();
+        int ancho = copia.getWidth();
+
+        int sharpenMatriz[][] = {
+            { -1, -1, -1 },
+            { -1, 9, -1 },
+            { -1, -1, -1 },
+        };
+
+        for (int j = 0; j < ancho; j++) {
+            double rojo = 0;
+            double verde = 0;
+            double azul = 0;
+            // Pixel 1 (-1, 1) = -1
+            int pixel = imagen.getRGB(((j - 1) % ancho < 0) ? ancho - 1 : j - 1, (i + 1) % alto);
+            Color c = new Color(pixel);
+            rojo += c.getRed() * sharpenMatriz[0][0];
+            verde += c.getGreen() * sharpenMatriz[0][0];
+            azul += c.getBlue() * sharpenMatriz[0][0];
+
+            // Pixel 2 (0, 1) = -1
+            pixel = imagen.getRGB((j % ancho), (i + 1) % alto);
+            c = new Color(pixel);
+            rojo += c.getRed() * sharpenMatriz[0][1];
+            verde += c.getGreen() * sharpenMatriz[0][1];
+            azul += c.getBlue() * sharpenMatriz[0][1];
+
+            // Pixel 3 (1, 1) = -1
+            pixel = imagen.getRGB((j + 1) % ancho, (i + 1) % alto);
+            c = new Color(pixel);
+            rojo += c.getRed() * sharpenMatriz[0][2];
+            verde += c.getGreen() * sharpenMatriz[0][2];
+            azul += c.getBlue() * sharpenMatriz[0][2];
+
+            // Pixel 4 (-1, 0) = -1
+            pixel = imagen.getRGB(((j - 1) % ancho < 0) ? ancho - 1 : j - 1, (i) % alto);
+            c = new Color(pixel);
+            rojo += c.getRed() * sharpenMatriz[1][0];
+            verde += c.getGreen() * sharpenMatriz[1][0];
+            azul += c.getBlue() * sharpenMatriz[1][0];
+
+            // Pixel 5 (0, 0) = 9
+            pixel = imagen.getRGB((j) % ancho, (i) % alto);
+            c = new Color(pixel);
+            rojo += c.getRed() * sharpenMatriz[1][1];
+            verde += c.getGreen() * sharpenMatriz[1][1];
+            azul += c.getBlue() * sharpenMatriz[1][1];
+
+            // Pixel 6 (1, 0) = -1
+            pixel = imagen.getRGB((j + 1) % ancho, (i) % alto);
+            c = new Color(pixel);
+            rojo += c.getRed() * sharpenMatriz[1][2];
+            verde += c.getGreen() * sharpenMatriz[1][2];
+            azul += c.getBlue() * sharpenMatriz[1][2];
+
+            // Pixel 7 (-1, -1) = -1
+            pixel = imagen.getRGB(((j-1)%ancho<0)?ancho-1:j-1,((i-1)%alto<0)?alto-1:i-1);
+            c = new Color(pixel);
+            rojo += c.getRed() * sharpenMatriz[2][0];
+            verde += c.getGreen() * sharpenMatriz[2][0];
+            azul += c.getBlue() * sharpenMatriz[2][0];
+
+            // Pixel 8 (0, -1) = -1
+            pixel = imagen.getRGB((j) % ancho, ((i - 1) % alto < 0) ? alto - 1 : i - 1);
+            c = new Color(pixel);
+            rojo += c.getRed() * sharpenMatriz[2][1];
+            verde += c.getGreen() * sharpenMatriz[2][1];
+            azul += c.getBlue() * sharpenMatriz[2][1];
+
+            // Pixel 9 (1, -1) = -1
+            pixel = imagen.getRGB((j + 1) % ancho, ((i - 1) % alto < 0) ? alto - 1 : i - 1);
+            c = new Color(pixel);
+            rojo += c.getRed() * sharpenMatriz[2][1];
+            verde += c.getGreen() * sharpenMatriz[2][1];
+            azul += c.getBlue() * sharpenMatriz[2][1];
+
+            rojo = (rojo>255)?255:(rojo<0)?0:rojo;
+            verde = (verde>255)?255:(verde<0)?0:verde;
+            azul = (azul>255)?255:(azul<0)?0:azul;
+
+            copia.setRGB(j, i, new Color((int)rojo,(int)verde,(int)azul).getRGB());
+        }
+    }
+    
     public static void main(String[] args) throws IOException, InterruptedException{
         FiltrosConcurrente fc = new FiltrosConcurrente();
 
         BufferedImage imagen = fc.leeImagen("src/assets/img/test1.jpeg");
         BufferedImage copia = copia(imagen, BufferedImage.TYPE_INT_RGB);
-        BufferedImage res = fc.motionBlur(imagen);//Secuencial
+        //BufferedImage res = fc.motionBlur(imagen);//Secuencial
+        BufferedImage res = fc.sharpen(imagen);//Secuencial
+        fc.guardaImagen(res,"src/assets/img/Prueba_sharpen_secuencial.png");
 
         List<Thread> hilosL = new ArrayList<>();
         int hilos = 15;
@@ -125,7 +212,8 @@ public class FiltrosConcurrente extends Filtros {
                 @Override
                 public void run() {
                     try{
-                        fc.motionBlurConcurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
+                        //fc.motionBlurConcurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
+                        fc.sharpenConcurrente(imagen, copia, Integer.parseInt(Thread.currentThread().getName()));
                     }catch(IOException e){
                         e.printStackTrace();
                     } 
@@ -146,6 +234,6 @@ public class FiltrosConcurrente extends Filtros {
             threads.join();
         }
 
-        fc.guardaImagen(copia,"src/assets/img/Prueba.png");
+        fc.guardaImagen(copia,"src/assets/img/Prueba_sharpen_concurrente.png");
     }
 }
