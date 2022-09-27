@@ -138,4 +138,8 @@ quiere decir es que es el algoritmo el que decide la mejora de velocidad, no el
 número de procesadores/hilos.
 
 
+# Referencias
 
+---
+nocite: '@**'
+---
