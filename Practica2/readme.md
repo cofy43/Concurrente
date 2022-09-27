@@ -22,6 +22,9 @@
     │   │   Matriz1.txt                  # Ejemplar de matriz
     │   │   SumaMatrices.java            # Ejecución secuencial
     │   │   SumaMatricesConcurrente.java # Ejecución concurrente
+    │   ├── SumaN                        # Directorio con el códgo para obtener la suma de los primeros n números naturales
+    │   │   SumaN.java                   # Ejecución secuencial
+    │   │   SumaNConcurrente.java        # Ejecución concurrente
     └── README.md
 
 ## Tecnologías
@@ -73,6 +76,9 @@ espacio, por ejemplo:
 1.0 1.0 1.0
 ```
 
+### Suma de los primeros N números naturales:
+Para una correcta ejecución se requiere pasar como parámetro mediante la terminal un número entero positivo
+
 ## Ejecución
 Para Los filtros tanto concurrente como secuencial:
 ```console
@@ -99,6 +105,18 @@ $ java Suma_Matrices.SumaMatrices
 ```
 
 Para la suma de matrices concurrente:
+```console
+$ javac -d . src/Suma_Matrices/SumaMatricesConcurrente.java
+$ java Suma_Matrices.SumaMatricesConcurrente
+```
+
+Para la suma n números naturales secuencial :
+```console
+$ javac -d . src/Suma_N/SumaN.java
+$ java Suma_N.SumaN
+```
+
+Para la suma n números naturales concurrente :
 ```console
 $ javac -d . src/Suma_Matrices/SumaMatricesConcurrente.java
 $ java Suma_Matrices.SumaMatricesConcurrente
