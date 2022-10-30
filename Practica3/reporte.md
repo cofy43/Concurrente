@@ -2,11 +2,11 @@
 # Implementación de Algoritmo de Peterson y Filtro modificado
 ---
 ## Práctica 3
-Integrantes 
-    - 'Espinal Cruces Martin Felipe'
-    - Fernandez Romero Adrian Felipe
-    - Sánchez de la Rosa César Gustavo
-    - Velázquez Caballero Ixchel
+####Integrantes 
+    * Espinal Cruces Martin Felipe
+    * Fernandez Romero Adrian Felipe
+    * Sánchez de la Rosa César Gustavo
+    * Velázquez Caballero Ixchel
 date: \today
 header-includes:
    - \usepackage[spanish]{babel}
