@@ -19,7 +19,7 @@ link-citations: yes
 
 # Teoría
 
-1. Proponer 4 problemas donde se pueda utilizar el algoritmo de Peterson para
+1. Proponer problemas donde se pueda utilizar el algoritmo de Peterson para
     su solución 
 
     1. Problema del Consumidor-Productor. Dicho problema describe dos procesos,
@@ -50,7 +50,14 @@ link-citations: yes
 
 
 
-2. Proponer 2 problemas donde se pueda utilizar el Algoritmo del Filtro
+2. Proponer problemas donde se pueda utilizar el Algoritmo del Filtro
+    1. Sorting Network.  Esta red esta formada por procesos que tienen 2 canales de
+entrada y 1 de salida. Su función es, a partir de la secuencia ordenada de datos entrantes,
+generar secuencialmente la mezcla ordenada en la salida.
+Utilizando estos procesos podemos formar un ´arbol binario de profundidad n con 2n−1
+hojas. Presentando a la entrada de cada una de estas hojas 2 valores, en la raíz obtendremos
+la secuencia de 2n datos ordenados.
+    2. Los esquema productor-consumidor muestran procesos que se comunican. Es habitual que estos procesos se organicen en pipes a través de los cuáles fluye la información. Cada proceso en el pipe es un filtro que consume la salida de su proceso predecesor y produce una salida para el proceso siguiente.
 
 ## Responde las siguientes preguntas, justificando tu respuesta:
 
@@ -83,5 +90,7 @@ link-citations: yes
 # Referencias
 
 ---
-nocite: '@**'
+- https://www.infor.uva.es/~cllamas/concurr/pract98/sisos4/
+- https://formella.webs.uvigo.es/doc/cdg11/exclusion.pdf
+- https://www.cs.cmu.edu/~kaess/pub/Kaess12fusion.pdf
 ---
