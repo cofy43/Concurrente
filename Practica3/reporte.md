@@ -1,7 +1,7 @@
 
 # Implementación de Algoritmo de Peterson y Filtro modificado
 ---
-subtitle: 'Práctica 3'
+## Práctica 3
 author: 
     - Espinal Cruces Martin Felipe
     - Fernandez Romero Adrian Felipe
@@ -17,7 +17,7 @@ bibliography: references.bib
 link-citations: yes
 ---
 
-## Teoría
+### Teoría
 
 1. Proponer problemas donde se pueda utilizar el algoritmo de Peterson para
     su solución 
