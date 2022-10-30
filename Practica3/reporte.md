@@ -1,6 +1,6 @@
 
 ---
-title: 'Implementación de Algoritmo de Peterson y Filtro modificado'
+"Implementación de Algoritmo de Peterson y Filtro modificado"
 subtitle: 'Práctica 3'
 author: 
     - Espinal Cruces Martin Felipe
