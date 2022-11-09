@@ -6,7 +6,7 @@ import src.TAS.TASLock;
 import src.TTAS.TTASLock;
 
 public class LockTest {
-    static final int THREADS = 2;
+    static final int THREADS = 7; // Numero de hilos
     static final int ITERATIONS = 50;
     static final int MAX_VALUE = 1000000;
     static final int WORK_SIZE = MAX_VALUE / THREADS;
@@ -62,12 +62,37 @@ public class LockTest {
         /*
         * Descomentar el test a ejecutar
         */
-        
+        System.out.println("Número de hilos:" + lt.THREADS);
+
+        long inicioTASLock = System.currentTimeMillis();
         lt.performTest(new TASLock());
+        long finTASLock = System.currentTimeMillis();
+        double tiempoTASLock = (double) ((finTASLock - inicioTASLock)/1000);
+        System.out.println("Tiempo de ejecución TASLock:" + tiempoTASLock +" segundos");
+        
+        long inicioTTASLock = System.currentTimeMillis();
         lt.performTest(new TTASLock());
+        long finTTASLock = System.currentTimeMillis();
+        double tiempoTTASLock = (double) ((finTTASLock - inicioTTASLock)/1000);
+        System.out.println("Tiempo de ejecución TTASLock:" + tiempoTTASLock +" segundos");
+
+        long inicioBackoffLock = System.currentTimeMillis();
         lt.performTest(new BackoffLock());
+        long finBackoffLock = System.currentTimeMillis();
+        double tiempoBackoffLock = (double) ((finBackoffLock - inicioBackoffLock)/1000);
+        System.out.println("Tiempo de ejecución BackoffLock:" + tiempoBackoffLock +" segundos");
+
+        long inicioCLHLock = System.currentTimeMillis();
         lt.performTest(new CLHLock());
+        long finCLHLock = System.currentTimeMillis();
+        double tiempoCLHLock = (double) ((finCLHLock - inicioCLHLock)/1000);
+        System.out.println("Tiempo de ejecución CLHLock:" + tiempoCLHLock +" segundos");
+
+        long inicioMCSLock = System.currentTimeMillis();
         lt.performTest(new MCSLock());
+        long finMCSLock = System.currentTimeMillis();
+        double tiempoMCSLock = (double) ((finMCSLock - inicioMCSLock)/1000);
+        System.out.println("Tiempo de ejecución MCSLock:" + tiempoMCSLock +" segundos");
         //lt.performTest(new ALock(THREADS));
     }
 }
