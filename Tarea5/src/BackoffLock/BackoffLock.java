@@ -30,7 +30,7 @@ public class BackoffLock implements Lock{
     }
 
     @Override
-    /*Método void que desbloqea*/
+    /*Método void que desbloquea*/
     public void unlock() {
         state.set(false);
     }
