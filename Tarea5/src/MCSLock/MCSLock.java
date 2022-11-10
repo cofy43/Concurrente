@@ -3,15 +3,25 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import src.Lock;
 
+/*
+* Clase QNode
+*/
+
 class QNode{
+    /*Atributos*/
     volatile boolean locked = false;
     QNode next = null;
 }
 
+/*
+* Clase MCSLock que implementa Lock
+* @author Concurreteam
+*/
 public class MCSLock implements Lock {
     AtomicReference<QNode> tail;
     ThreadLocal<QNode> myNode;
-
+    
+    /*Método constructor*/
     public MCSLock(){
         tail = new AtomicReference<QNode>(null);
         myNode = new ThreadLocal<QNode>(){
@@ -22,6 +32,7 @@ public class MCSLock implements Lock {
     }
 
     @Override
+    /*Método void que bloquea*/
     public void lock() {
         QNode qnode = myNode.get();
         QNode pred = tail.getAndSet(qnode);
@@ -33,6 +44,7 @@ public class MCSLock implements Lock {
     }
 
     @Override
+    /*Método void que desbloquea*/
     public void unlock() {
         QNode qnode = myNode.get();
         if(qnode.next == null){
