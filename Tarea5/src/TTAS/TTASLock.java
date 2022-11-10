@@ -3,6 +3,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import src.Lock;
 
+/*
+*Clase TTASLock que implementa Lock
+*/
 public class TTASLock implements Lock{
     private AtomicBoolean state = new AtomicBoolean(false);
 
