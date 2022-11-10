@@ -2,7 +2,12 @@ package src.historias;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+* Clase Counter que implementa Runnable
+*/
+
 public class Counter implements Runnable {
+    /*Atributos*/
     public static final int ROUNDS = 5;
     private int counter = 0;
 
@@ -13,6 +18,9 @@ public class Counter implements Runnable {
         }
     }
 
+    /**
+    *Método  main
+    */
     public static void main(String[] args) throws InterruptedException {
         Counter c = new Counter();
         List<Thread> hilos = new ArrayList();

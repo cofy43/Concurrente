@@ -4,8 +4,12 @@ import src.CLHLock.CLHLock;
 import src.MCSLock.MCSLock;
 import src.TAS.TASLock;
 import src.TTAS.TTASLock;
-
+/**
+ * @author Concurrenteam
+ * Clase LockTest
+ */
 public class LockTest {
+    /*Atributos*/
     static final int THREADS = 7; // Numero de hilos
     static final int ITERATIONS = 50;
     static final int MAX_VALUE = 1000000;
@@ -15,6 +19,9 @@ public class LockTest {
     volatile Counter counter;
     Thread[] threads;
 
+    /*
+    * Excepcion que es lanzado si la prueba no es aprobada
+    */
     void performTest(Lock lock) throws InterruptedException {
         for(int i = 0; i < ITERATIONS; i++) {
             counter = new Counter(lock);
@@ -43,12 +50,20 @@ public class LockTest {
         }
     }
 
+    /*
+    * Método void que incrementa el contador
+    */
     void incrementCounter(final int iterations) {
         for(int i = 0; i < iterations; i++) {
             counter.getAndIncrement();
         }
     }
 
+    /*
+    * Método que afirma la igualdad de los valores
+    *@param value, int
+    *@param expected, int
+    */
     void assertEquals(int value, int expected){
         if(value != expected){
             System.out.println("Los valores no concuerdan");
@@ -57,6 +72,10 @@ public class LockTest {
         }
     }
 
+    /**
+    *Método main
+    *@param args
+    */
     public static void main(String[] args) throws InterruptedException{
         LockTest lt = new LockTest();
         /*
@@ -97,14 +116,20 @@ public class LockTest {
     }
 }
 
+/*Clase Counter*/
 class Counter {
+    /*Atributos*/
     volatile int value;
     volatile Lock lock;
 
+    /*
+    *Método constructor
+    */
     Counter(Lock lock) {
         this.value = 0;
         this.lock = lock;
     }
+    
     int getAndIncrement() {
         this.lock.lock();
         int result = this.value++;
