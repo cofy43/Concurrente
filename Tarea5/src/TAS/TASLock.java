@@ -2,6 +2,10 @@ package src.TAS;
 import java.util.concurrent.atomic.AtomicBoolean;
 import src.Lock;
 
+/*
+* Clase TASLock que implementa Lock
+* @author Concurreteam
+*/
 public class TASLock implements Lock{
     AtomicBoolean state = new AtomicBoolean(false);
 
