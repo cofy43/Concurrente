@@ -4,7 +4,7 @@ import src.Lock;
 
 /*
 * Clase TAS2Lock que implementa Lock
-* @Author Concurreteam
+* @author Concurreteam
 */
 
 public class TAS2Lock implements Lock{
