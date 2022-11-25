@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
                 int hilos = Integer.parseInt(String.valueOf(num_hilos.getText()));
                 String mat = "" + edit_matriz.getText();
                 boolean incorrectOption = !mat.equals("10") && !mat.equals("100") && !mat.equals("1000");
-                boolean moreThreads = hilos > Integer.parseInt(mat);
                 if (incorrectOption) {
                     edit_matriz.setError("Solo se aceptan los valores: 10, 100, 1000");
                     return;
