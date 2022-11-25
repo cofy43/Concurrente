@@ -71,7 +71,7 @@ public class SumaMatricesConcurrente implements Runnable{
         double[][] A = readMatrix("src/Suma_Matrices/Matriz.txt");
         double[][] B = readMatrix("src/Suma_Matrices/Matriz1.txt");
         SumaMatricesConcurrente m = new SumaMatricesConcurrente(A,B);
-        int hilos = 5;
+        int hilos = 100;
         List<Thread> hilosh = new ArrayList<Thread>();
         for(int i = 0; i < A.length; i++){
             Thread t = new Thread(m,""+i);

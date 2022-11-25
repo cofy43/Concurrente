@@ -51,9 +51,6 @@ public class MainActivity extends AppCompatActivity {
                 if (incorrectOption) {
                     edit_matriz.setError("Solo se aceptan los valores: 10, 100, 1000");
                     return;
-                } else if (moreThreads) {
-                    num_hilos.setError("No se puede ejecutar con más hilos que las dimenciones de la matriz");
-                    return;
                 }
                 String res = "";
                 String resC = "";
@@ -78,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     List<Thread> hilosL = new ArrayList<>();
                     long tInicioC, tFinC;
                     tInicioC = System.nanoTime();
-                    for(int i = 0; i < hilos; i++){
+                    for(int i = 0; i < matriz.length; i++){
                         Thread t = new Thread(concurrente,""+i);
                         hilosL.add(t);
                         t.start();
