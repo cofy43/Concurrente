@@ -44,7 +44,7 @@ public class LockTest {
         }
 
         if(APROVATION/ITERATIONS > .65){
-            System.out.println("Prueba superada \nAprovacion del: "+ APROVATION/ITERATIONS *100+"%");
+            System.out.println("Prueba superada \nAprobacion del: "+ APROVATION/ITERATIONS *100+"%");
         }else{
             System.out.println("Prueba no superada");
         }
