@@ -1,5 +1,7 @@
 package Filosofos;
 
+import Filosofos.Candados.Semaforo;
+
 public class FilosofosTest {
     static int TABLE_SIZE = 5;
     static int TEN_SECONDS = 10000;

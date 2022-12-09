@@ -1,15 +1,13 @@
-package Filosofos;
+package Filosofos.Candados;
 
-import Filosofos.Candados.Semaforo;
-
-public class FilterSemaphoreImpl implements Semaforo {
+public class Filtro implements Semaforo {
 
     int threads;
     int maxConcurrentTheads;
     volatile int level[];
     volatile int lastToEnter[];
 
-    public FilterSemaphoreImpl(int threads, int maxConcurrentTheads) {
+    public Filtro(int threads, int maxConcurrentTheads) {
         this.threads = threads;
         this.maxConcurrentTheads = threads;
         this.level = new int[threads];
@@ -43,5 +41,5 @@ public class FilterSemaphoreImpl implements Semaforo {
         int i = Integer.parseInt(Thread.currentThread().getName()); // ThreadID is a ThreadLocal field
         level[i] = 0;
     }
-
+    
 }

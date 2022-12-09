@@ -1,4 +1,4 @@
-package Filosofos;
+package Filosofos.Candados;
 
 public interface Semaforo {
     
