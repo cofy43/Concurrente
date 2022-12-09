@@ -40,18 +40,40 @@ public class Banno {
     }
 
     public void entraHombre() throws InterruptedException{
-        //Aqui va el codigo
+        lock.lock();
+        try {
+            while (used) {
+                this.hombres.await();
+            }
+            this.timesMalesEntered += 1;
+            this.males += 1;
+        } finally {
+            lock.unlock();
+        }
     }
 
     public void salHombre(){
-        //Aqui va el codigo
+        this.used = false;
+        this.lock.unlock();
+        this.hombres.signalAll();
     }
 
     public void entraMujer() throws InterruptedException{
-        //Aqui va el codigo
+        lock.lock();
+        try {
+            while (used) {
+                this.mujeres.await();
+            }
+            this.timesMalesEntered += 1;
+            this.males += 1;
+        } finally {
+            lock.unlock();
+        }
     }
 
     public void salMujer(){
-        //Aqui va el codigo
+        this.used = false;
+        this.lock.unlock();
+        this.mujeres.signalAll();
     }
 }
